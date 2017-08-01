@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property name="DEV_HOME" value="C:/BLCH/logs" />
+
+    <!--Setting for console log-->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- Log message format -->
+        <encoder>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!--Setting for file log-->
+    <appender name="FILE-AUDIT"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${DEV_HOME}/BLCH.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
+            </Pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${DEV_HOME}/archived/BLCH.%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>500KB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
+    </appender>
+
+    <logger name="com.blch" level="debug"
+            additivity="false">
+        <appender-ref ref="FILE-AUDIT" />
+    </logger>
+
+    <!--<logger name="org.springframework.security" level="error"
+            additivity="false">
+        <appender-ref ref="FILE-AUDIT" />
+    </logger>
+
+    <logger name="org.springframework.web" level="error"
+            additivity="false">
+        <appender-ref ref="FILE-AUDIT" />
+    </logger>
+
+    <logger name="org.hibernate" level="error"
+            additivity="false">
+        <appender-ref ref="FILE-AUDIT" />
+    </logger>
+-->
+    <root level="info">
+        <appender-ref ref="FILE-AUDIT" />
+    </root>
+
+</configuration>

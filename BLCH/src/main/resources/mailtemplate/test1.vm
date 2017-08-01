@@ -1,0 +1,6 @@
+<html>
+<body>
+<h3>Hi ${user}, Th you !</h3>
+<h1>Hi ${user}, Thank you !</h1>
+</body>
+</html>

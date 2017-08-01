@@ -1,0 +1,127 @@
+--spring boot will create tables in H2 database base on Entities class
+--remember to check scope <provider> for related depedency between both type jar/war
+--remember the webapp files must always synchrony to meta-INF/resources for launching by jar file
+--change the icon web
+--handle exceptions
+--review and fix the home page from REST request by URL
+--check validate input
+--spring mvc security with table
+--*session in spring mvc
+--default page for Whitelabel Error Page
+--default page for 404 error, 403 error, 400 bad request
+--check why can't connect to /console dba page
+--if browser disable to save cookie, spring sercirity will be failed, check it //URL rewriting is the last option we should resort to for session tracking. When a client browser does not accept a cookie, URL rewriting may be used by the container for session tracking.
+--Check Cross-Browser Compatibility
+--timeout of existing data in H2
+--timeout session for ajax calls
+--check the home url in executing response phase of ajax calls
+--print full trace of error in log
+--support log4j
+--check the func FORMATDATETIME in H2 database when moving to mySQL
+--check loop in ajax onload function which re-load page in the end
+--*check jquery send ajax request with csrfSetting() is failed when using the jquery version 3.2.1 ERROR: SyntaxError: An invalid or illegal string was specified
+--*try to use Programmatic transaction management to be able handle commit/rollback phase
+--add more log comments base on logger property was defined for each functional class
+--chek sercurity issue: XSS, CSRF, Insecure Direct Object References
+--apply Liquibase for project to track any changes in DB instead of inserting log in DB
+--upgrade to use angular.js instead of jquery
+moi chi ho tro angular.js cho 3 trang: trang chu admin, trang quan ly khach hang adim va trang capnhatkhachhang admin
+--add log comment in phase shutdown of application
+--fiix bug velocity - ResourceManager : unable to find resource
+--enable csrfSetting for angular pages
+--try to work wwith non-memory DB (MySQL)
+--handle error come from backend on ajax request:
+the error page returned in ajax response then create a unavailable client page
+--check if the connection pool is available on datasource
+
+BLCH_CANHO(ID, MACANHO, TENDUAN, FILEDINHKEM, TINHTRANG, BANGIAO)
+BLCH_THANHTOAN(IDKHACHHANG, IDCANHO, SOTIEN, DOTTHANHTOAN, NGAYTHANHTOAN, GHICHU)
+BLCH_KHACHHANG(ID, TENKHACHHANG,TENDANGNHAP, EMAIL, DIENTHOAI, NGAYKICHHOAT)
+BLCH_LICHBANGIAO(IDKHACHHANG, IDCANHO, NGAYDANGKY, TRANGTHAI, IDQUANTRI, NGAYDUYET)
+BLCH_QUANTRIVIEN(ID, TEN, TENDANGNHAP, EMAIL, LOAI)
+BLCH_LISHSU(ID, USERID, TYPE, TABLE, IDS, COLUMNS, NEWVALUES, DATE, DESC)
+BLCH_USERS(USERNAME, PASSWORD, ENABLED)
+BLCH_USER_ROLES(USERNAME, ROLE)
+
+http://www.java2s.com/Tutorials/Java/JPA/4026__JPA_Query_Named_Parameter.htm
+https://en.wikibooks.org/wiki/Java_Persistence/Querying#Query_Results
+https://designshack.net/tutorialexamples/css3-pagination/index-2.html
+http://rtsinani.github.io/jquery-datepicker-skins/
+https://material.io/icons/#ic_check_circle
+
+@Tech:
+http://blog.jhades.org/how-does-spring-transactional-really-work/
+http://www.journaldev.com/2603/spring-transaction-management-jdbc-example
+http://www.baeldung.com/transaction-configuration-with-jpa-and-spring
+http://blog.netgloo.com/2014/10/06/spring-boot-data-access-with-jpa-hibernate-and-mysql/
+#####The data source properties starting with spring.datasource.* will automatically be read by spring boot JPA. To change the hibernate properties we will use prefix spring.jpa.properties.* with hibernate property name. On the basis of given data source URL, spring boot can automatically identify data source driver class. So we need not to configure diver class.
+http://www.concretepage.com/spring-boot/spring-boot-rest-jpa-hibernate-mysql-example
+http://www.thoughts-on-java.org/jpa-generate-primary-keys/
+https://springframework.guru/using-the-h2-database-console-in-spring-boot-with-spring-security/
+#####Spring supports two types of transaction management − Programmatic vs. Declarative
+https://www.tutorialspoint.com/spring/spring_transaction_management.htm
+https://docs.jboss.org/hibernate/entitymanager/3.5/reference/en/html/query_native.html
+#####Distinguish WebApplicationInitializer and ApplicationContextInitializer
+https://dzone.com/articles/spring-1
+#####Example quartz in spring boot
+https://github.com/davidkiss/spring-boot-quartz-demo
+#####Send mail in spring boot
+https://www.quickprogrammingtips.com/spring-boot/how-to-send-email-from-spring-boot-applications.html
+#####Cron maker Quartz
+http://www.cronmaker.com/
+#####Note that we can't pass data From Model spring object in JSP pagge To angular model object
+the model spring object from server can only be taken from javascript by @RestController function,
+in this case server will return a json object instead of jsp page view
+
+
+
+
+
+***Note***
+--in the function with anotation @transaction, spring just handle on tasks(error...) of EntityManager,
+if in the that function, we throw a customized error the func rollback of transaction will not be called
+but if the function was set up that not throw any checked error, the rollback was still called in unchecked exception
+
+public interface MyRepository extends JpaRepository {
+  @Query(name = [name], nativeQuery = true)
+  List<Object[]> methodThatQueriesMultipleTables();
+}
+
+@Query(value = "SELECT YOUR Column1, ColumnN FROM USERS WHERE EMAIL_ADDRESS = ?0", nativeQuery = true)
+List<Object[]> findByEmailAddress(String emailAddress);
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
+
+interface TodoRepository extends Repository<Todo, Long> {
+
+    @Query(nativeQuery=true)
+    public List<Todo> findByDesc(@Param("description") String description);
+
+    @Query(value = "select name,author,price from Book b where b.name like %:name%")
+    List<Book> findByNameMatch(@Param("name") String name);
+
+public interface MyRepository extends JpaRepository {
+  @Query(name = [name], nativeQuery = true)
+  List<Object[]> methodThatQueriesMultipleTables();
+}
+
+@Query(value = "SELECT YOUR Column1, ColumnN FROM USERS WHERE EMAIL_ADDRESS = ?0", nativeQuery = true)
+List<Object[]> findByEmailAddress(String emailAddress);
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
+
+interface TodoRepository extends Repository<Todo, Long> {
+
+    @Query(nativeQuery=true)
+    public List<Todo> findByDesc(@Param("description") String description);
+
+    @Query(value = "select name,author,price from Book b where b.name like %:name%")
+    List<Book> findByNameMatch(@Param("name") String name);
